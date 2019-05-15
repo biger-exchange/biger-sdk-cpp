@@ -1,0 +1,61 @@
+##----------------------------------------------------------
+A=@
+CC    = gcc
+CXX   = g++
+AR    = ar
+DB2   = db2
+RM    = rm
+ECHO  = echo
+MV    = mv
+MAKE  = make
+CD    = cd
+CP    = cp
+MKDIR = mkdir
+FIND  = find
+XARGS = xargs
+STRIP = strip
+
+##-----------install path-----------------------
+INSTALL_PATH    = ./install
+BOOST_LIB_PATH 	= /usr/local/lib/
+PROTOC			= protoc
+PROTOBUF_HDR    = /usr/include/
+
+##-----------OS/COMPILE SPECIAL FLAGS------------
+GIT_REVISION=$(shell git rev-parse --short HEAD 2>/dev/null)
+ifeq ($(GIT_REVISION),)
+	GIT_REVISION=None
+endif
+RELEASE_REVISON=$(VERSION).$(GIT_REVISION)
+BOOST_CXXFLAG = -std=c++17 -DBOOST_ASIO_HAS_STD_CHRONO -DBOOST_COROUTINES_NO_DEPRECATION_WARNING
+CXXFLAGS1 = -O2 -Wall $(BOOST_CXXFLAG) -Wunused-variable -Wno-overloaded-virtual -fdata-sections -ffunction-sections -DNDEBUG -DREVISION=$(RELEASE_REVISON) -fPIC
+#DEBUG_CXXFLAGS = $(filter-out -DNDEBUG -DREVISION=$(RELEASE_REVISON) -O2,$(CXXFLAGS)) -g -O0 -DREVISION=$(RELEASE_REVISON)-g
+CXXFLAGS = $(filter-out -DNDEBUG -DREVISION=$(RELEASE_REVISON) -O2,$(CXXFLAGS1)) -g -O0 -DREVISION=$(RELEASE_REVISON)-g
+TCMALLOC_LDFLAGS = -fno-builtin-malloc -fno-builtin-calloc -fno-builtin-realloc -fno-builtin-free
+LDFLAGS = -Wl,--gc-sections $(TCMALLOC_LDFLAGS)
+#AROSFLAGS= -X64 
+AROSFLAGS=
+DLLFLAGS = -shared
+ARFLAGS  = $(AROSFLAGS) -ruc
+
+##----------------------------------------------------------
+SYSINCLUDES  = /usr/local/include \
+		   /usr/include
+SYSLIB_PATHS = /usr/lib64
+BOOST_STATIC_LINKINGS=libboost_program_options.a \
+		libboost_system.a \
+		libboost_log.a \
+		libboost_log_setup.a \
+		libboost_thread.a \
+		libboost_coroutine.a \
+		libboost_date_time.a \
+		libboost_filesystem.a \
+		libboost_context.a \
+		libboost_locale.a
+
+DYNAMIC_LINKINGS =
+STATIC_LINKINGS  =
+STATIC_LINKINGS  += $(addprefix $(BOOST_LIB_PATH)/, $(BOOST_STATIC_LINKINGS))
+
+##----------------------------------------------------------
+SRCEXTS = .c .cc .cpp .proto
