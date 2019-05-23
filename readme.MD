@@ -1,23 +1,24 @@
-# here is the biger cpp sdk projects
 
-## centos7
+# 1. Here is the biger cpp sdk projects
 
-### 安装下载第三方库
+## 1.1. 在centos7中搭建环境
+
+## 1.2. 安装下载第三方库
 
 * cd third  
 * sh ./build.sh
 
-### 安装clang-format
+## 1.3. 安装clang-format
 
 * sudo yum install llvm-toolset-7-clang -y
 
-### 安装C++编译器
+## 1.4. 安装C++编译器
 
 * sudo yum install centos-release-scl* -y
 * sudo yum install devtoolset-7-gcc-c++ -y
 * sudo yum install devtoolset-7-gcc devtoolset-7-gdb -y
 
-### 安装boost 1.69.0
+## 1.5. 安装boost 1.69.0
 
 * sudo yum install gcc-c++ -y
 * sudo yum install libicu-devel -y
@@ -25,10 +26,9 @@
 * sudo sh ./bootstrap.sh --prefix=/usr/local/
 * sudo ./b2 install
 
-## 编译依赖
+## 1.6. 编译依赖
 
 * sudo yum install gperftools-devel -y
 * sudo yum install gperftools-libs -y
 * sudo yum install openssl-devel -y
 * sudo yum install cryptopp-devel -y
-
